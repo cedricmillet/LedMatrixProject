@@ -15,23 +15,137 @@ struct point {
 typedef struct point Point;
 
 struct image {
-  int hauteur;
   int largeur;
+  int hauteur;
+  const CRGB pixel[8][6];
 };
 typedef struct image Image;
 
-//  MATRICE LOGO YOUTUBE
-const CRGB logo_youtube[6][7] = {   {CRGB(0,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(0,0,0)},
-                                    {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0)},
-                                    {CRGB(255,0,0),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,0,0)},
-                                    {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,0,0),CRGB(255,0,0)},
-                                    {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,255,255),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0)},
-                                    {CRGB(0,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(0,0,0)}  };
-                            
-Image img_YT = {6, 7};
+//  MATRICE LOGO YOUTUBE                                   
+Image img_YT = {6, 8, {   
+                          {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0)},
+                          {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,255,255),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0)},
+                          {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,0,0),CRGB(255,0,0)},
+                          {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,0,0)},
+                          {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,0,0),CRGB(255,0,0)},
+                          {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,255,255),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0)},
+                          {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0)},
+                          {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0)}
+                        }};
 
+
+const int digits[10][8][4] =       {
+                                    {   
+                                    {1,1,1,1},    //0
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,1,1,1}
+                                  },  
+                                  {   
+                                    {0,0,0,1},    //1
+                                    {0,0,1,1},
+                                    {0,1,0,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1}
+                                  },
+                                  {   
+                                    {1,1,1,1},    //2
+                                    {1,0,0,1},
+                                    {0,0,0,1},
+                                    {1,1,1,1},
+                                    {1,0,0,0},
+                                    {1,0,0,0},
+                                    {1,0,0,0},
+                                    {1,1,1,1}
+                                  },
+                                  {   
+                                    {1,1,1,1},    //3
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {1,1,1,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {1,1,1,1}
+                                  },
+                                  {   
+                                    {1,0,0,1},    //4
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,1,1,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1}
+                                  },
+                                  {   
+                                    {1,1,1,1},    //5
+                                    {1,0,0,0},
+                                    {1,0,0,0},
+                                    {1,1,1,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {1,1,1,1}
+                                  }, 
+                                  {   
+                                    {1,1,1,1},    //6
+                                    {1,0,0,0},
+                                    {1,0,0,0},
+                                    {1,1,1,1},
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,1,1,1}
+                                  },
+                                  {   
+                                    {1,1,1,1},    //7
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {0,0,1,0},
+                                    {0,0,1,0},
+                                    {0,1,0,0},
+                                    {0,1,0,0},
+                                    {1,0,0,0}
+                                  },
+                                  {   
+                                    {1,1,1,1},    //8
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,1,1,1},
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,1,1,1}
+                                  },
+                                  {   
+                                    {1,1,1,1},    //9
+                                    {1,0,0,1},
+                                    {1,0,0,1},
+                                    {1,1,1,1},
+                                    {0,0,0,1},
+                                    {0,0,0,1},
+                                    {1,0,0,1},
+                                    {1,1,1,1}
+                                  },
+                                };
 
 //  =========================== PRIMITIVES UTILES ============================================
+
+int getNbrInRange(int n, int min, int max) {
+  if(n<min)
+    n=min;
+  if(n>max)
+    n=max;
+  return (int)n;
+}
 
 //  Pour un pixel de coordonnée (x,y), retourne son indice dans le tableau
 int posPixel(int x, int y) {
@@ -61,89 +175,66 @@ void clear_screen() {
         leds[i] = CRGB(0,0,0);
 }
 
-void animationBalayageRandom() {
-  for(int y=0;y<HAUTEUR;y++) {
-    for (int x=0;x<LARGEUR;x++) {
-        leds[posPixel(x, y)] = getRandomLedColor();
-        delay(100);
-        FastLED.show();
-    }
-  }
-  
-}
-
-void TranslateX(int e) {
-  for(int y=0;y<HAUTEUR;y++) {
-    Serial.println("--------------------------------"); Serial.println("");
-      for (int x=0;x<LARGEUR;x++) { //pour chaque pixel
-        
-        if(x == LARGEUR-1) {
-          Serial.println("Le pixel de coordonnées : "); Serial.print(LARGEUR+e); Serial.print(" ; "); Serial.print(y); Serial.print (" prend la valeur du pixel "); Serial.print(0); Serial.print(" ; "); Serial.print(y);
-          leds[posPixel(x, y)] = leds[posPixel(x-LARGEUR-1, y)];
-        }else {
-          leds[posPixel(x, y)] = leds[posPixel(x+1, y)];
-        }
-          
-          
-      }
-    }
-}
-
-void scrollLeft() {
-  int nb_scroll = 300;
-  int delay_2_scroll = 200;
-  
-  for(int i=0; i<nb_scroll;i++) {
-    TranslateX(-1);
-    
-    FastLED.show();
-    delay(delay_2_scroll);
-  }
-}
-
-void appliquer_logo_YT(Point origine) {
-  int t_x = 6, t_y = 7;     //  TAILLE DE L'IMAGE (LARGEUR /HAUTEUR)    
-  for(int x=0; x<t_x;x++) {
-    for(int y=0; y<t_y;y++) {
-      SetPixelColor({x+origine.x, y+origine.y}, logo_youtube[x][y]);
-      //leds[posPixel(x+origine.x, y+origine.y)] = logo_youtube[x][y];
-      //Serial.print("x="); Serial.print(x); Serial.print(" - y="); Serial.print(y); Serial.print(" - i = "); Serial.print(posPixel(x, y)); Serial.print(" --- logo= "); Serial.println(logo_youtube[x][y]); 
+void appliquer_logo_YT(Point pos) {
+  //Check point origine dans l'intervalle
+  if(pos.x<0) pos.x=0;
+  if(pos.y<0) pos.y=0;
+  if(pos.x>LARGEUR-1) pos.x=LARGEUR-1;
+  if(pos.y>HAUTEUR-1) pos.y=HAUTEUR-1;
+  //Application du logo à la matrice de LEDS
+  for(int y=0; y<img_YT.hauteur;y++) {
+    for(int x=0; x<img_YT.largeur;x++) {
+      SetPixelColor({x+pos.x, y+pos.y}, img_YT.pixel[y][x]);
     }
   }  
 }
 
 
+void fill_digit(int n, Point pos, CRGB fontColor) {
+  if(n<0) n=0;
+  if(n>9) n=9;
+  int largeur_digit = 4, hauteur_digit = 8; 
+  
+  for(int y=0; y<hauteur_digit;y++) {
+    for(int x=0; x<largeur_digit;x++) {
+      if(digits[n][y][x]>0)
+        SetPixelColor({x+pos.x, y+pos.y}, fontColor);
+      else
+        SetPixelColor({x+pos.x, y+pos.y}, CRGB(0,0,0));
+    }
+  }  
+}
+
+void SetNumberToDisplay(int n) {
+  n = getNbrInRange(n, 0, 99999);
+  int placement_digits[5] = {7, 12, 18, 23, 28};
+  int padding = 0;
+  if(n<=9)
+    padding = 4;
+  else if(n<=99)
+    padding = 3;
+  else if(n<=999)
+    padding = 2;
+  else if(n<=9999)
+    padding = 1;
+
+  for(int i=padding;i<5;i++) {
+    fill_digit((int)( String(String(n, DEC).charAt(i-padding)).toInt()  ), {placement_digits[i],0}, CRGB(0,0,255));
+  }
+
+}
 
 //  =========================== INITIALISATION ECRAN ============================================
 void screenSystem_Setup() {
   Serial.print("Initialisation ScreenSystem...........");
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
   FastLED.setBrightness(LUMINOSITE);
-
-
-  
-
-  //scrollLeft();
-  /*
-  for(int y=0; y<HAUTEUR; y++) {
-    for(int x=0; x<LARGEUR;x++) { 
-      Serial.print("x="); Serial.print(x); Serial.print(" - y="); Serial.print(y); Serial.print(" - i = "); Serial.println(posPixel(x, y)); 
-      leds[posPixel(x, y)] = CRGB(255,0,0);   
-      FastLED.show();
-      delay(50);
-    }
-  }
-  return;
-  */
-  for(int a=-6;a<=LARGEUR;a++) {
-    clear_screen();
-    appliquer_logo_YT({a,0});
-    FastLED.show();
-    delay(250);
-  }
+  clear_screen();
+  SetPixelColor({0,0}, CRGB(255,255,0));
+  FastLED.show();
   Serial.print("[DONE]");
   Serial.println();
-}
+} // !!! AUCUN EANIMATION DANS CETTE FONCTION POUR NE PAS FAIRE ATTENDRE ESP8266, SE MET EN ERREUR EN CAS DE TIMEOUT / DELAY
 
 
 

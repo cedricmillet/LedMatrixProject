@@ -44,8 +44,7 @@ void initialisation() {
   //  Lancement de l'écran LED
   screenSystem_Setup();
   //  Connexion au réseau WIFI
-  //setupWifiClient("FREEBOX_MILLET", "Mkanad45-1203");
-  
+  setupWifiClient("FREEBOX_MILLET", "Mkanad45-1203");
 }
 
 
@@ -68,14 +67,21 @@ void setup() {
   Serial.println("\tINITIALISATION TERMINEE");
   Serial.println("------------------------------------------");  
 
-
+  
   //  Premiere requete avant les premieres iteration de la loop()
   //updateSocialDatasFromAPI();
   isInitialisationReady = true;
+
+  start_counter();
 }
 
 
-
+void start_counter() {
+  clear_screen();
+  appliquer_logo_YT({0,0});
+  SetNumberToDisplay(25462);
+  FastLED.show();
+}
 
 
 void updateSocialDatasFromAPI()
