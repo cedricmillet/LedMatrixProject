@@ -22,7 +22,7 @@ ESP8266WebServer server(80);      //  Serveur WEB sur port 80
 #import "index.h"                 //  Contient le code HTML retourné par le serveur WEB
 #import "ScreenSystem_WS2812B.h"  //  Contient les fonctions de manipulation de l'écran LED
 
-#define WEB_API_ENDPOINT  "http://ytproject.cedricmillet.fr/api/index.php"
+#define WEB_API_ENDPOINT  "http://ytproject.cedricmillet.fr/api/index.php?UID=782D-A2DC8-A7E1-A79D1"
 #define SOCIAL_DATA_REFRESH_FREQUENCY   120 //en seconde
 int timer = 0;
 bool isInitialisationReady = false;
@@ -45,6 +45,11 @@ void initialisation() {
   screenSystem_Setup();
   //  Connexion au réseau WIFI
   setupWifiClient("FREEBOX_MILLET", "Mkanad45-1203");
+  //  Screen
+  SetBackgroundColor(CRGB(255,255,255));
+  AppliquerImage(img_YT, {0,0});
+  SetNumberToDisplay( 0 );
+  FastLED.show();
 }
 
 
@@ -72,16 +77,9 @@ void setup() {
   //updateSocialDatasFromAPI();
   isInitialisationReady = true;
 
-  start_counter();
+  updateSocialDatasFromAPI();
 }
 
-
-void start_counter() {
-  clear_screen();
-  appliquer_logo_YT({0,0});
-  SetNumberToDisplay(25462);
-  FastLED.show();
-}
 
 
 void updateSocialDatasFromAPI()
@@ -93,15 +91,14 @@ void updateSocialDatasFromAPI()
   Serial.print("updateSocialDatasFromAPI()_______");
   HTTPClient httpClient;
   String reponse = "";
-  httpClient.begin(WEB_API_ENDPOINT);  //Specify request destination - endpoint test : http://jsonplaceholder.typicode.com/users/1
+  httpClient.begin(WEB_API_ENDPOINT);  
   //  Envoie de la requete
   int httpCode = httpClient.GET();
   if (httpCode > 0)
-    reponse = httpClient.getString();   //Get the request response payload
+    reponse = httpClient.getString();   //response payload
   httpClient.end();   //Close connection
   //  Traitement de la réponse
   if(!reponse.isEmpty() && reponse.length() > 0) {
-    //Serial.print(reponse);
     //  Conversion en JSON
     DynamicJsonBuffer jsonBuffer;
     JsonObject& jsonSocialData = jsonBuffer.parseObject(reponse);
@@ -117,10 +114,8 @@ void updateSocialDatasFromAPI()
     Serial.println(reponse);
   }
 
-
-
   debugData();
-  
+  update_screen();
 }
 
 void debugData() {
@@ -138,7 +133,13 @@ void debugData() {
 }
 
 
-
+void update_screen() {
+  SetBackgroundColor(CRGB(0,0,0));
+  AppliquerImage(img_YT, {0,0});
+  Serial.println("Affichage YT, nbAbonnes = "); Serial.print((int)s_youtube.nb_subscribers);
+  SetNumberToDisplay( (int)s_youtube.nb_subscribers );
+  FastLED.show();
+}
 
 void loop() {
   
@@ -148,7 +149,7 @@ void loop() {
   
   if(!isWifiStatusConnected() || !isInitialisationReady) return;
 
-
+  
 
   
 

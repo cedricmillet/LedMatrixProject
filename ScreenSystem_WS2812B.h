@@ -32,6 +32,30 @@ Image img_YT = {6, 8, {
                           {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0)},
                           {CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0),CRGB(255,0,0)}
                         }};
+                        
+//  MATRICE LOGO FACEBOOK
+Image img_FB = {6, 8, {   
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,255,255),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)}
+                        }};
+
+//  MATRICE LOGO INSTA
+Image img_INSTA = {6, 8, {   // bug !!! Lorsque R/G/B < 100 couleur invisible ! Verifier intensité nécéssaire et augmenter BRIGHTNESS !
+                          {CRGB(74,41,236),CRGB(91,38,232),CRGB(100,100,231),CRGB(118,100,224),CRGB(133,80,212),CRGB(143,80,226)},
+                          {CRGB(143,27,186),CRGB(194,103,178),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,255,255),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(255,255,255),CRGB(255,255,255),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(255,255,255),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)},
+                          {CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178),CRGB(66,103,178)}
+                        }};
 
 
 const int digits[10][8][4] =       {
@@ -161,6 +185,10 @@ void SetPixelColor(Point pixel, CRGB color) {
   leds[posPixel(pixel.x, pixel.y)] = color; //update du CRGB de la matrice
 }
 
+void SetBackgroundColor(CRGB bgcolor) {
+  fill_solid( leds, NUM_LEDS, bgcolor);
+}
+
 CRGB getRandomLedColor() {
   return CRGB(random(20, 255), random(20, 255), random(20, 255));        
 }
@@ -175,21 +203,21 @@ void clear_screen() {
         leds[i] = CRGB(0,0,0);
 }
 
-void appliquer_logo_YT(Point pos) {
+void AppliquerImage(Image img, Point pos) {
   //Check point origine dans l'intervalle
   if(pos.x<0) pos.x=0;
   if(pos.y<0) pos.y=0;
   if(pos.x>LARGEUR-1) pos.x=LARGEUR-1;
   if(pos.y>HAUTEUR-1) pos.y=HAUTEUR-1;
   //Application du logo à la matrice de LEDS
-  for(int y=0; y<img_YT.hauteur;y++) {
-    for(int x=0; x<img_YT.largeur;x++) {
-      SetPixelColor({x+pos.x, y+pos.y}, img_YT.pixel[y][x]);
+  for(int y=0; y<img.hauteur;y++) {
+    for(int x=0; x<img.largeur;x++) {
+      SetPixelColor({x+pos.x, y+pos.y}, img.pixel[y][x]);
     }
   }  
 }
 
-
+//  Afficher un nombre (matrice de taille 4x8), à une position donnée, une couleur donnée.
 void fill_digit(int n, Point pos, CRGB fontColor) {
   if(n<0) n=0;
   if(n>9) n=9;
@@ -199,8 +227,8 @@ void fill_digit(int n, Point pos, CRGB fontColor) {
     for(int x=0; x<largeur_digit;x++) {
       if(digits[n][y][x]>0)
         SetPixelColor({x+pos.x, y+pos.y}, fontColor);
-      else
-        SetPixelColor({x+pos.x, y+pos.y}, CRGB(0,0,0));
+      /*else
+        SetPixelColor({x+pos.x, y+pos.y}, CRGB(0,0,0));*/
     }
   }  
 }
