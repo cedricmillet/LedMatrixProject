@@ -21,9 +21,12 @@ ESP8266WebServer server(80);      //  Serveur WEB sur port 80
 
 #import "index.h"                 //  Contient le code HTML retourné par le serveur WEB
 #import "ScreenSystem_WS2812B.h"  //  Contient les fonctions de manipulation de l'écran LED
+#import "SoundSystem.h"           //  Contient les fonctions de manipulation du BUZZER
 
 #define WEB_API_ENDPOINT  "http://ytproject.cedricmillet.fr/api/index.php?UID=782D-A2DC8-A7E1-A79D1"
 #define SOCIAL_DATA_REFRESH_FREQUENCY   120 //en seconde
+
+
 int timer = 0;
 bool isInitialisationReady = false;
 
@@ -50,6 +53,9 @@ void initialisation() {
   AppliquerImage(img_YT, {0,0});
   SetNumberToDisplay( 0 );
   FastLED.show();
+  //  Emit Sound
+  SetupSoundSystem();
+  
 }
 
 

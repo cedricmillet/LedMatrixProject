@@ -199,16 +199,14 @@ void fill_random() {
 }
 
 void clear_screen() {
-  for(int i=0;i<NUM_LEDS;i++)
-        leds[i] = CRGB(0,0,0);
+  fill_solid( leds, NUM_LEDS, CRGB(0,0,0));
 }
 
 void AppliquerImage(Image img, Point pos) {
   //Check point origine dans l'intervalle
-  if(pos.x<0) pos.x=0;
-  if(pos.y<0) pos.y=0;
-  if(pos.x>LARGEUR-1) pos.x=LARGEUR-1;
-  if(pos.y>HAUTEUR-1) pos.y=HAUTEUR-1;
+  pos.x = getNbrInRange(pos.x, 0, LARGEUR-1);
+  pos.y = getNbrInRange(pos.y, 0, HAUTEUR-1);
+
   //Application du logo à la matrice de LEDS
   for(int y=0; y<img.hauteur;y++) {
     for(int x=0; x<img.largeur;x++) {
@@ -219,8 +217,8 @@ void AppliquerImage(Image img, Point pos) {
 
 //  Afficher un nombre (matrice de taille 4x8), à une position donnée, une couleur donnée.
 void fill_digit(int n, Point pos, CRGB fontColor) {
-  if(n<0) n=0;
-  if(n>9) n=9;
+  n = getNbrInRange(n, 0, 9);
+  
   int largeur_digit = 4, hauteur_digit = 8; 
   
   for(int y=0; y<hauteur_digit;y++) {
