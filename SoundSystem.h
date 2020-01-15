@@ -16,6 +16,8 @@ void EmitSound1() {
 
 
 void SetupSoundSystem() {
+  return;
+  
   pinMode(PIN_BUZZER, OUTPUT);
 
   EmitSound1();
